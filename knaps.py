@@ -43,7 +43,7 @@ with preporcessing:
     df[["age", "sex", "trtbps", "thalachh"]].agg(['min','max'])
 
     df.output.value_counts()
-    df = df.drop(columns=["cp"])
+    df = df.drop(columns=["cp", "fbs", "restecg", "exng", "oldpeak", "slp", "caa", "thall"])
 
     X = df.drop(columns="output")
     y = df.output
@@ -88,10 +88,10 @@ with preporcessing:
     
 
 with modeling:
-    x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=4)
+    X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=4)
     sc = StandardScaler()
-    x_train = sc.fit_transform(x_train)
-    x_test = sc.transform(x_test)
+    X_train = sc.fit_transform(x_train)
+    X_test = sc.transform(x_test)
 
     st.write("""# Modeling """)
     st.subheader("Berikut ini adalah pilihan untuk Modeling")
@@ -103,24 +103,24 @@ with modeling:
 
     # NB
     model = GaussianNB()
-    model.fit(x_train, y_train)
+    model.fit(X_train, y_train)
 
-    predicted = model.predict(x_test)
+    predicted = model.predict(X_test)
 
     akurasi_nb = round(accuracy_score(y_test, predicted)*100)
 
     #KNN
     model = KNeighborsClassifier(n_neighbors = 1)  
-    model.fit(x_train, y_train)
-    predicted = model.predict(x_test)
+    model.fit(X_train, y_train)
+    predicted = model.predict(X_test)
     
     akurasi_knn = round(accuracy_score(y_test, predicted.round())*100)
 
     #SVM
     model = SVC()
-    model.fit(x_train, y_train)
+    model.fit(X_train, y_train)
     
-    predicted = model.predict(x_test)
+    predicted = model.predict(X_test)
     akurasi_svm = round(accuracy_score(y_test, predicted)*100)
 
     if naive :
