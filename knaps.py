@@ -42,11 +42,11 @@ with preporcessing:
     st.write("""# Preprocessing""")
     df[["age", "sex", "trtbps", "thalachh"]].agg(['min','max'])
 
-    df.heart.value_counts()
-    df = df.drop(columns=["cp", "fbs", "restecg", "oldpeak", "slp", "caa", "thall", "exng", "output"])
+    df.output.value_counts()
+    df = df.drop(columns=["output"])
 
-    X = df.drop(columns=["cp", "fbs", "restecg", "oldpeak", "slp", "caa", "thall", "exng", "output"])
-    y = df.heart
+    X = df.drop(columns=["output"])
+    y = df.output
 
     "### Membuang fitur yang tidak diperlukan"
     df
@@ -68,6 +68,7 @@ with preporcessing:
     scaler = MinMaxScaler()
     scaler.fit(X)
     X = scaler.transform(X)
+
     "### Normalize data transformasi"
     X
 
@@ -75,7 +76,7 @@ with preporcessing:
 
     le.inverse_transform(y)
 
-    labels = pd.get_dummies(df.heart).columns.values.tolist()
+    labels = pd.get_dummies(df.output).columns.values.tolist()
     
     "### Label"
     labels
