@@ -159,34 +159,9 @@ with implementation:
     if sex == "Laki-Laki":
         sex_Female = 0
         sex_Male = 1
-        sex_Other = 0
     elif sex == "Perempuan" :
         sex_Female = 1
         sex_Male = 0
-        sex_Other = 0
-
-    #chest pain
-    cp = st.radio("Jenis sakit di dada/nyeri dada",('Angina yang khas', 'Angina Atipikal', 'Nyeri non-angina', 'Asimtomatik'))
-    if cp == "Angina yang khas":
-        cp_ta = 1
-        cp_aa = 0
-        cp_na = 0
-        cp_a = 0
-    elif cp == "Angina Atipikal":
-        cp_ta = 0
-        cp_aa = 1
-        cp_na = 0
-        cp_a = 0
-    elif cp == "Nyeri non-angina":
-        cp_ta = 0
-        cp_aa = 0
-        cp_na = 1
-        cp_a = 0
-    elif cp == "Asimtomatik":
-        cp_ta = 0
-        cp_aa = 0
-        cp_na = 0
-        cp_a = 1
     
     #blood pressure
     trtbps = st.number_input('Tekanan Darah (mm Hg)')
@@ -194,121 +169,23 @@ with implementation:
     #cholestoral
     chol = st.number_input('Kolesterol (mg/dl)')
 
-    #fasting blood sugar
-    fbs = st.radio("Gula Darah Puasa > 120 mg/dl",('No', 'Yes'))
-    if fbs == "Yes":
-        fbs_y = 1
-        fbs_n = 0
-    elif fbs == "No":
-        fbs_y = 0
-        fbs_n = 1
-    
-    #electrocardiographic results
-    restecg = st.radio("Hasil lektrokardiografi",('Normal', 'Gelombang kelainan ST-T', 'Hipertrofi ventrikel kiri'))
-    if restecg == "Normal":
-        restecg_1 = 1
-        restecg_2 = 0
-        restecg_3 = 0
-    elif restecg == "Gelombang kelainan ST-T" :
-        restecg_1 = 0
-        restecg_2 = 1
-        restecg_3 = 0
-    elif restecg == "Hipertrofi ventrikel kiri" :
-        restecg_1 = 0
-        restecg_2 = 0
-        restecg_3 = 1
-    
     #Maximum heart rate achieved
     thalachh = st.number_input('Detak jantung maksimum')
 
-    #Exercise induced angina
-    exang = st.radio("Nyeri Dada",('Ya', 'Tidak'))
-    if exang == "Ya":
-        exang_y = 1
-        exang_n = 0
-    elif exang == "Tidak":
-        exang_y = 0
-        exang_n = 1
-
-    #old peak
-    oldpeak = st.number_input('ST depression induced by exercise relative to rest')
-
-    #slope
-    slope = st.radio("Kemiringan segmen latihan puncak ST",('Condong keatas', 'Datar', 'Sedikit landai'))
-    if slope == "Condong keatas":
-        slope_1 = 1
-        slope_2 = 0
-        slope_3 = 0
-    elif slope == "Datar" :
-        slope_1 = 0
-        slope_2 = 1
-        slope_3 = 0
-    elif slope == "Sedikit landai" :
-        slope_1 = 0
-        slope_2 = 0
-        slope_3 = 1
-
-    #Number of major vessels
-    caa = st.radio("Banyaknya nadi utama",('0', '1', '2', '3'))
-    if caa == "0":
-        caa_1 = 1
-        caa_2 = 0
-        caa_3 = 0
-        caa_4 = 0
-    elif caa == "1" :
-        caa_1 = 0
-        caa_2 = 1
-        caa_3 = 0
-        caa_4 = 0
-    elif caa == "2" :
-        caa_1 = 0
-        caa_2 = 0
-        caa_3 = 1
-        caa_4 = 0
-    elif caa == "3" :
-        caa_1 = 0
-        caa_2 = 0
-        caa_3 = 0
-        caa_4 = 1
-
-    #thall
-    thall = st.radio("Hasil Tes Stres Talium",('Normal', 'Cacat tetap', 'Cacat sementara'))
-    if thall == "Normal":
-        thall_1 = 1
-        thall_2 = 0
-        thall_3 = 0
-    elif thall == "Cacat tetap" :
-        thall_1 = 0
-        thall_2 = 1
-        thall_3 = 0
-    elif thall == "Cacat sementara" :
-        thall_1 = 0
-        thall_2 = 0
-        thall_3 = 1
-    
     def submit():
         # input
         inputs = np.array([[
             age,
-            sex, sex_Female,  sex_Male,
-            cp, cp_ta, cp_aa, cp_na, cp_a,
+            sex, sex_Female, sex_Male,
             trtbps,
             chol,
-            fbs, fbs_y, fbs_n,
-            restecg, restecg_1, restecg_2, restecg_3,
-            thalachh,
-            exang, exang_y, exang_n,
-            oldpeak,
-            slope, slope_1, slope_2, slope_3,
-            caa, caa_1, caa_2, caa_3, caa_4,
-            thall, thall_1, thall_2, thall_3
+            thalachh
             ]])
-
         le = joblib.load("le.save")
         model1 = joblib.load("knn.joblib")
         y_pred3 = model1.predict(inputs)
-        st.write(f"Berdasarkan data yang Anda masukkan, maka anda dinyatakan : {le.inverse_transform(y_pred3)[0]}")
-    
+        st.write(f"Berdasarkan data yang di masukkan, maka anda prediksi cuaca : {le.inverse_transform(y_pred3)[0]}")
+
     all = st.button("Submit")
     if all :
         st.balloons()
