@@ -43,24 +43,22 @@ with preporcessing:
     df[["age", "sex", "trtbps", "thalachh"]].agg(['min','max'])
 
     df.output.value_counts()
-    df = df.drop(columns=["output"])
+    df = df.drop(columns=["cp"])
 
-    X = df.drop(columns=["output"])
+    X = df.drop(columns="output")
     y = df.output
-
     "### Membuang fitur yang tidak diperlukan"
     df
 
     le = preprocessing.LabelEncoder()
     le.fit(y)
     y = le.transform(y)
-
     "### Transformasi Label"
     y
 
     le.inverse_transform(y)
 
-    labels = pd.get_dummies(df.heart).columns.values.tolist()
+    labels = pd.get_dummies(df.output).columns.values.tolist()
 
     "### Label"
     labels
