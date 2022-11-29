@@ -159,7 +159,7 @@ with implementation:
     if sex == "Laki-Laki":
         sex_Female = 0
         sex_Male = 1
-    elif sex == "Perempuan" :
+    elif sex == "Perempuan":
         sex_Female = 1
         sex_Male = 0
     
@@ -176,7 +176,7 @@ with implementation:
         # input
         inputs = np.array([[
             age,
-            sex, sex_Female, sex_Male,
+            sex_Female, sex_Male,
             trtbps,
             chol,
             thalachh
