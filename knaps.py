@@ -186,7 +186,16 @@ with implementation:
             ]])
 
         le = joblib.load("le.save")
-        model1 = joblib.load("nb.joblib")
+
+        if akurasi_nb > akurasi_knn and akurasi_svm:
+            model = joblib.load("nb.joblib")
+
+        elif akurasi_knn > akurasi_nb and akurasi_svm:
+            model = joblib.load("knn.joblib")
+
+        elif akurasi_svm > akurasi_knn and akurasi_nb:
+            model = joblib.load("svm.joblib")
+    
         y_pred3 = model1.predict(inputs)
         st.write(f"Berdasarkan data yang di masukkan, maka pasien termasuk : {le.inverse_transform(y_pred3)[0]}")
         st.write("0 = Tidak menderita penyakit jantung")
