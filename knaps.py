@@ -132,15 +132,6 @@ with implementation:
 
     #age
     age = st.number_input('Umur Pasien')
-
-    #sex
-    sex = st.radio("Jenis Kelamin",('Laki-Laki', 'Perempuan'))
-    if sex == "Laki-Laki":
-        sex_Female = 0
-        sex_Male = 1
-    elif sex == "Perempuan":
-        sex_Female = 1
-        sex_Male = 0
     
     #blood pressure
     trtbps = st.number_input('Tekanan Darah (mm Hg)')
@@ -148,13 +139,16 @@ with implementation:
     #cholestoral
     chol = st.number_input('Kolesterol (mg/dl)')
 
+    #Maximum heart rate achieved
+    thalachh = st.number_input('Detak jantung maksimum')
+
     def submit():
         # input
         inputs = np.array([[
             age,
-            sex_Female, sex_Male,
             trtbps,
             chol,
+            thalachh
             ]])
         le = joblib.load("le.save")
         model1 = joblib.load("knn.joblib")
