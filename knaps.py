@@ -148,9 +148,6 @@ with implementation:
     #cholestoral
     chol = st.number_input('Kolesterol (mg/dl)')
 
-    #Maximum heart rate achieved
-    thalachh = st.number_input('Detak jantung maksimum')
-
     def submit():
         # input
         inputs = np.array([[
@@ -158,7 +155,6 @@ with implementation:
             sex_Female, sex_Male,
             trtbps,
             chol,
-            thalachh
             ]])
         le = joblib.load("le.save")
         model1 = joblib.load("knn.joblib")
