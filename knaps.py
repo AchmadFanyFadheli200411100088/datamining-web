@@ -132,6 +132,15 @@ with implementation:
 
     #age
     age = st.number_input('Umur Pasien')
+
+    #sex
+    sex = st.radio("Jenis Kelamin",('Laki-Laki', 'Perempuan'))
+    if sex == "Laki-Laki":
+        sex_Female = 0
+        sex_Male = 1
+    elif sex == "Perempuan" :
+        sex_Female = 1
+        sex_Male = 0
     
     #blood pressure
     trtbps = st.number_input('Tekanan Darah (mm Hg)')
@@ -139,17 +148,42 @@ with implementation:
     #cholestoral
     chol = st.number_input('Kolesterol (mg/dl)')
 
+    #fasting blood sugar
+    fbs = st.radio("Gula Darah Puasa > 120 mg/dl",('No', 'Yes'))
+    if fbs == "Yes":
+        fbs_y = 1
+        fbs_n = 0
+    elif fbs == "No":
+        fbs_y = 0
+        fbs_n = 1
+    
     #Maximum heart rate achieved
     thalachh = st.number_input('Detak jantung maksimum')
+
+    #Exercise induced angina
+    exang = st.radio("Nyeri Dada",('Ya', 'Tidak'))
+    if exang == "Ya":
+        exang_y = 1
+        exang_n = 0
+    elif exang == "Tidak":
+        exang_y = 0
+        exang_n = 1
+
+    #old peak
+    oldpeak = st.number_input('ST depression induced by exercise relative to rest')
 
     def submit():
         # input
         inputs = np.array([[
             age,
+            sex_Female, sex_Male,
             trtbps,
             chol,
-            thalachh
+            fbs,
+            thalachh,
+            exang_y, exang_n
             ]])
+            
         le = joblib.load("le.save")
         model1 = joblib.load("nb.joblib")
         y_pred3 = model1.predict(inputs)
