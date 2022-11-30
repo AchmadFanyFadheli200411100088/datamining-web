@@ -3,6 +3,7 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
 from sklearn import preprocessing
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import LabelEncoder
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -40,51 +41,29 @@ with upload_data:
 
 with preporcessing:
     st.write("""# Preprocessing""")
-    df[["age", "sex", "trtbps", "thalachh"]].agg(['min','max'])
-
-    df.output.value_counts()
-    df = df.drop(columns=["cp", "fbs", "restecg", "exng", "oldpeak", "slp", "caa", "thall"])
-
-    X = df.drop(columns="output")
-    y = df.output
-    "### Membuang fitur yang tidak diperlukan"
-    df
-
-    le = preprocessing.LabelEncoder()
-    le.fit(y)
-    y = le.transform(y)
-    "### Transformasi Label"
-    y
-
-    le.inverse_transform(y)
-
-    labels = pd.get_dummies(df.output).columns.values.tolist()
-
-    "### Label"
-    labels
-
-    scaler = MinMaxScaler()
-    scaler.fit(X)
-    X = scaler.transform(X)
-
-    "### Normalize data transformasi"
-    X
-
-    X.shape, y.shape
-
-    le.inverse_transform(y)
-
-    labels = pd.get_dummies(df.output).columns.values.tolist()
     
-    "### Label"
-    labels
+    "### There's no need for categorical encoding"
+    X = df.iloc[:, 1:-1].values
+    y = df.iloc[:, -1].values
+    X,y
+
+    le = LabelEncoder()
+    y = le.fit_transform(y)
 
     scaler = MinMaxScaler()
-    scaler.fit(X)
-    X = scaler.transform(X)
-    X
+    scaled = scaler.fit_transform(X)
+    st.write("Hasil Preprocesing : ", scaled)
 
-    X.shape, y.shape
+    "### Splitting the dataset into training and testing data"
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size= 0.2, random_state= 0)
+    st.write("Shape for training data", X_train.shape, y_train.shape)
+    st.write("Shape for testing data", X_test.shape, y_test.shape)
+
+    "### Feature Scaling"
+    scaler = StandardScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
+    X_train,X_test
     
 
 with modeling:
