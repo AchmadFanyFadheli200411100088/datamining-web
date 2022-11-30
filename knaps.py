@@ -138,7 +138,7 @@ with implementation:
     if sex == "Laki-Laki":
         sex_Female = 0
         sex_Male = 1
-    elif sex == "Perempuan" :
+    elif sex == "Perempuan":
         sex_Female = 1
         sex_Male = 0
     
@@ -179,11 +179,12 @@ with implementation:
             sex_Female, sex_Male,
             trtbps,
             chol,
-            fbs,
+            fbs_y, fbs_n,
             thalachh,
-            exang_y, exang_n
+            exang_y, exang_n,
+            oldpeak
             ]])
-            
+
         le = joblib.load("le.save")
         model1 = joblib.load("nb.joblib")
         y_pred3 = model1.predict(inputs)
