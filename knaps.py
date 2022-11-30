@@ -189,6 +189,8 @@ with implementation:
         model1 = joblib.load("nb.joblib")
         y_pred3 = model1.predict(inputs)
         st.write(f"Berdasarkan data yang di masukkan, maka pasien termasuk : {le.inverse_transform(y_pred3)[0]}")
+        st.write("0 = Tidak menderita penyakit jantung")
+        st.write("1 = menderita penyakit jantung")
 
     all = st.button("Submit")
     if all :
